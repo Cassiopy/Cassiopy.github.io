@@ -107,7 +107,7 @@
       <!-- Photos section -->
       <section class="photos-section">
         <h2 class="section-title">📸 Compartir Fotos</h2>
-        <p class="section-description">Guarda las fotos de la fiesta en nuestra carpeta compartida pública:</p>
+        <p class="section-description">Guardá las fotos de la fiesta en nuestra carpeta compartida pública:</p>
         <a href="https://drive.google.com/drive/folders/10lwMtG7bVBI4earde9lrx412ZOsm0m42?usp=sharing" target="_blank" class="cta-button">
           📁 Abrir Google Drive
         </a>
@@ -116,7 +116,7 @@
       <!-- Activities section -->
       <section class="activities-section">
         <h2 class="section-title">🎉 Actividades</h2>
-        <p class="activities-description">Te esperamos para pasar la tarde y noche en la pileta, disfrutando de música, karaoke, videojuegos y jugando unas rifas.</p>
+        <p class="activities-description">Te esperamos para pasar la tarde y noche en la pileta con música, karaoke, videojuegos y jugando unas rifas.</p>
         
         <div class="carousel-container">
           <button class="carousel-btn carousel-btn-prev" id="carousel-prev">❮</button>
@@ -177,6 +177,7 @@
       // Enter button clicked - hide cover and start music
       enterBtn.addEventListener('click', () => {
         coverModal.classList.add('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         bgMusic.muted = false;
         // Play music after a short delay to sync with animation
         setTimeout(() => {
