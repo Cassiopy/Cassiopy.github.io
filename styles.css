@@ -418,6 +418,60 @@ body {
   box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
 }
 
+/* Activities section */
+.activities-section {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.06), rgba(212, 175, 55, 0.02));
+  border: 2px solid var(--border);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(212, 175, 55, 0.08);
+}
+
+.activities-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.activities-text {
+  text-align: left;
+}
+
+.activities-text p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.activities-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.activities-list li {
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.activities-image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 3px solid var(--gold);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+  object-fit: cover;
+}
+
 /* Share section */
 .share-section {
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.06), rgba(212, 175, 55, 0.02));
@@ -506,7 +560,6 @@ body {
   text-align: center;
   padding: 2rem;
   border: 2px solid var(--border);
-  margin-top: 2rem;
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.06), rgba(212, 175, 55, 0.02));
   border-radius: 15px;
   box-shadow: 0 8px 32px rgba(212, 175, 55, 0.08);
@@ -563,6 +616,11 @@ body {
 
   .name-input {
     min-width: 100%;
+  }
+
+  .activities-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }
 
