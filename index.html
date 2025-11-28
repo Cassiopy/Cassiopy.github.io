@@ -159,12 +159,15 @@
       enterBtn.addEventListener('click', () => {
         coverModal.classList.add('hidden');
         bgMusic.muted = false;
-        bgMusic.play().then(() => {
-          console.log('Audio playing');
-          musicBtn.textContent = '⏸️';
-        }).catch(err => {
-          console.log('Play error:', err);
-        });
+        // Play music after a short delay to sync with animation
+        setTimeout(() => {
+          bgMusic.play().then(() => {
+            console.log('Audio playing');
+            musicBtn.textContent = '⏸️';
+          }).catch(err => {
+            console.log('Play error:', err);
+          });
+        }, 300);
       });
 
       musicBtn.addEventListener('click', () => {
