@@ -1,0 +1,42 @@
+body {
+  background: #0a0a0a;
+  font-family: 'Cinzel', serif;
+  color: #d7b45a;
+  text-align: center;
+  padding: 40px;
+}
+
+.card {
+  max-width: 600px;
+  margin: auto;
+  padding: 30px;
+  border: 1px solid #d7b45a;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+
+h1 {
+  font-size: 3rem;
+  color: #e5c882;
+  margin-bottom: 10px;
+}
+
+.section {
+  margin-top: 30px;
+}
+
+.gold-btn {
+  color: #0a0a0a;
+  background: #e5c882;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.qr {
+  width: 180px;
+  margin-top: 10px;
+}
