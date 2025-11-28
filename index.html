@@ -22,7 +22,7 @@
 
     <!-- Music player -->
     <div class="music-player">
-      <audio id="bg-music" loop>
+      <audio id="bg-music" loop autoplay muted>
         <source src="Dua Lipa - Levitating Featuring DaBaby (Official Music Video) - Dua Lipa.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
       </audio>
@@ -42,7 +42,7 @@
         <h1 class="title-main">Fiesta de</h1>
         <h1 class="title-main title-highlight">Navidad</h1>
         
-        <p class="subtitle-text" id="greeting">Te invitamos a celebrar,</p>
+        <p class="subtitle-text" id="greeting">Te invitamos a celebrar</p>
         
         <div class="decorative-bottom">
           <span class="sparkle">✨</span>
@@ -86,7 +86,7 @@
             📍 Abrir en Google Maps
           </a>
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3353.2587463620753!2d-65.51622!3d-31.75856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x940bc8f8c6c8c8c8%3A0x1234567890abcdef!2sLos%20Casta%C3%B1os%20279%2C%20Potrero%20de%20los%20Funes!5e0!3m2!1ses!2sar!4v1234567890123" 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1677.5169206999995!2d-66.22800160000001!3d-33.21498690000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4150067ba63d3%3A0xc49814a3c24f9549!2sAlkimia%20del%20R%C3%ADo!5e0!3m2!1ses!2sar!4v1700000000000" 
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade"
             class="map-iframe">
@@ -145,7 +145,28 @@
         bgMusic.volume = volumeSlider.value / 100;
       });
 
+      // Autoplay setup: allow autoplay when user interacts
       bgMusic.volume = 0.3;
+      
+      // Attempt autoplay with unmute on user interaction
+      function enableAutoplay() {
+        bgMusic.muted = false;
+        bgMusic.play().catch(err => console.log('Autoplay fallback:', err));
+        document.removeEventListener('click', enableAutoplay);
+        document.removeEventListener('touchstart', enableAutoplay);
+      }
+      
+      // Enable autoplay on first user interaction
+      document.addEventListener('click', enableAutoplay, { once: true });
+      document.addEventListener('touchstart', enableAutoplay, { once: true });
+      
+      // Update button state
+      bgMusic.addEventListener('play', () => {
+        musicBtn.textContent = '⏸️';
+      });
+      bgMusic.addEventListener('pause', () => {
+        musicBtn.textContent = '🎵';
+      });
 
     </script>
   </body>

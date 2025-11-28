@@ -1,12 +1,12 @@
 :root {
-  --bg: #0a0a0a;
-  --bg-overlay: #070606;
+  --bg: #020202;
+  --bg-overlay: #030303;
   --gold: #d4af37;
   --gold-light: #e6c547;
   --text: #f5f2ec;
   --text-muted: rgba(255, 255, 255, 0.65);
   --border: rgba(212, 175, 55, 0.15);
-  --card-bg: rgba(255, 255, 255, 0.02);
+  --card-bg: rgba(255, 255, 255, 0.01);
 }
 
 * {
@@ -22,12 +22,14 @@ body {
 
 body {
   font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a0f05 50%, #0a0a0a 100%);
+  background: linear-gradient(180deg, #000000 0%, #0a0505 50%, #000000 100%);
+  background-attachment: fixed;
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   position: relative;
+  min-height: 100vh;
 }
 
 /* Animated stars background */
@@ -39,6 +41,7 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.3) 100%);
 }
 
 .star {
@@ -116,6 +119,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  min-height: 100vh;
 }
 
 /* Header section */
