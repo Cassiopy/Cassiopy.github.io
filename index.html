@@ -22,7 +22,7 @@
 
     <!-- Music player -->
     <div class="music-player">
-      <audio id="bg-music" loop autoplay muted>
+      <audio id="bg-music" loop autoplay>
         <source src="Dua Lipa - Levitating Featuring DaBaby (Official Music Video) - Dua Lipa.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
       </audio>
@@ -106,7 +106,7 @@
       <!-- Footer -->
       <footer class="footer-section">
         <p class="footer-text">¡Te esperamos!</p>
-        <p class="footer-text">Sofi y Maxi</p>
+        <p class="footer-hosts">Sofi y Maxi</p>
       </footer>
     </main>
 
@@ -123,7 +123,7 @@
       const toName = getParam('to');
       const greeting = document.getElementById('greeting');
       if (toName) {
-        greeting.textContent = `${decodeURIComponent(toName)}, te invitamos a celebrar,`;
+        greeting.textContent = `${decodeURIComponent(toName)}, te invitamos a celebrar`;
       }
 
       // Music player
@@ -145,22 +145,16 @@
         bgMusic.volume = volumeSlider.value / 100;
       });
 
-      // Autoplay setup: allow autoplay when user interacts
+      // Autoplay setup
       bgMusic.volume = 0.3;
+      bgMusic.play().catch(err => console.log('Autoplay error:', err));
       
-      // Attempt autoplay with unmute on user interaction
-      function enableAutoplay() {
-        bgMusic.muted = false;
-        bgMusic.play().catch(err => console.log('Autoplay fallback:', err));
-        document.removeEventListener('click', enableAutoplay);
-        document.removeEventListener('touchstart', enableAutoplay);
+      // Update button state on load
+      if (!bgMusic.paused) {
+        musicBtn.textContent = '⏸️';
       }
       
-      // Enable autoplay on first user interaction
-      document.addEventListener('click', enableAutoplay, { once: true });
-      document.addEventListener('touchstart', enableAutoplay, { once: true });
-      
-      // Update button state
+      // Update button state on play/pause
       bgMusic.addEventListener('play', () => {
         musicBtn.textContent = '⏸️';
       });
