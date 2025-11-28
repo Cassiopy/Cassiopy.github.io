@@ -153,9 +153,11 @@ body {
 
 .header-star {
   font-size: 1.2rem;
-  color: var(--gold-light);
-  opacity: 0.8;
+  color: #d4af37;
+  opacity: 0.9;
   animation: twinkle-star 2.5s ease-in-out infinite;
+  font-weight: bold;
+  text-shadow: 0 0 3px rgba(212, 175, 55, 0.8);
 }
 
 .header-star:nth-child(2) {
