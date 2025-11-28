@@ -22,7 +22,7 @@
 
     <!-- Music player -->
     <div class="music-player">
-      <audio id="bg-music" loop autoplay muted playsinline>
+      <audio id="bg-music" loop playsinline>
         <source src="Dua Lipa - Levitating Featuring DaBaby (Official Music Video) - Dua Lipa.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
       </audio>
@@ -134,62 +134,45 @@
       // Set initial volume
       bgMusic.volume = 0.3;
 
-      // Try autoplay immediately
-      const attemptAutoplay = () => {
-        bgMusic.muted = false;
-        const playPromise = bgMusic.play();
-        
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              console.log('Autoplay successful');
-              musicBtn.textContent = '⏸️';
-            })
-            .catch(err => {
-              console.log('Autoplay failed, attempting workaround...');
-              // Workaround: create a dummy audio to trigger autoplay permission
-              const dummyAudio = new Audio();
-              dummyAudio.src = bgMusic.src;
-              dummyAudio.muted = true;
-              dummyAudio.play().then(() => {
-                // Now try again with real audio
-                bgMusic.play().then(() => {
-                  musicBtn.textContent = '⏸️';
-                }).catch(e => {
-                  console.log('Second attempt failed:', e);
-                  // Final fallback: wait for user interaction
-                  setupInteractionPlay();
-                });
-              }).catch(e => {
-                console.log('Dummy audio failed:', e);
-                setupInteractionPlay();
-              });
-            });
+      // Wait for user interaction to unmute and play with sound
+      let hasInteracted = false;
+      
+      const unmuteAndPlay = () => {
+        if (!hasInteracted) {
+          hasInteracted = true;
+          bgMusic.muted = false;
+          bgMusic.play().then(() => {
+            console.log('Audio unmuted and playing');
+            musicBtn.textContent = '⏸️';
+          }).catch(err => {
+            console.log('Play error:', err);
+          });
+          
+          // Remove listeners after first interaction
+          document.removeEventListener('click', unmuteAndPlay);
+          document.removeEventListener('touchstart', unmuteAndPlay);
+          document.removeEventListener('keydown', unmuteAndPlay);
         }
       };
 
-      const setupInteractionPlay = () => {
-        const playOnInteract = () => {
-          bgMusic.muted = false;
-          bgMusic.play().then(() => {
-            musicBtn.textContent = '⏸️';
-            document.removeEventListener('click', playOnInteract);
-            document.removeEventListener('touchstart', playOnInteract);
-          }).catch(e => console.log('Play error:', e));
-        };
-        document.addEventListener('click', playOnInteract, { once: true });
-        document.addEventListener('touchstart', playOnInteract, { once: true });
-      };
+      // Listen for any user interaction to unmute
+      document.addEventListener('click', unmuteAndPlay);
+      document.addEventListener('touchstart', unmuteAndPlay);
+      document.addEventListener('keydown', unmuteAndPlay);
 
-      // Start autoplay attempt when page loads
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', attemptAutoplay);
-      } else {
-        attemptAutoplay();
-      }
+      // Also try to unmute after 2 seconds (some browsers allow this)
+      setTimeout(() => {
+        if (!hasInteracted && bgMusic.paused) {
+          bgMusic.muted = false;
+          bgMusic.play().catch(err => {
+            console.log('Delayed play failed, waiting for interaction');
+          });
+        }
+      }, 2000);
 
       musicBtn.addEventListener('click', () => {
         if (bgMusic.paused) {
+          bgMusic.muted = false;
           bgMusic.play().catch(err => console.log('Play error:', err));
           musicBtn.textContent = '⏸️';
         } else {
