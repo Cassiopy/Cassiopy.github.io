@@ -103,25 +103,9 @@
         </a>
       </section>
 
-      <!-- QR & Share section -->
-      <section class="share-section">
-        <h2 class="section-title">✨ Comparte la Invitación</h2>
-        <p class="section-description">Personaliza tu invitación con tu nombre para compartir:</p>
-        
-        <div class="share-tools">
-          <input id="name-input" type="text" class="name-input" placeholder="Tu nombre" />
-          <button id="make-link" class="action-btn">Generar Link</button>
-          <button id="copy-link" class="action-btn">Copiar Link</button>
-        </div>
-
-        <div id="qrcode" class="qrcode-container"></div>
-        <small class="qr-hint">Escanea para ver tu invitación personalizada</small>
-      </section>
-
       <!-- Footer -->
       <footer class="footer-section">
-        <p class="footer-text">¡Te esperamos para un año más!</p>
-        <p class="footer-subtitle">Una noche llena de magia y alegría 🎄✨</p>
+        <p class="footer-text">¡Te esperamos!</p>
       </footer>
     </main>
 
@@ -138,7 +122,7 @@
       const toName = getParam('to');
       const greeting = document.getElementById('greeting');
       if (toName) {
-        greeting.textContent = `Querido/a ${decodeURIComponent(toName)}, te invitamos a celebrar,`;
+        greeting.textContent = `${decodeURIComponent(toName)}, te invitamos a celebrar,`;
       }
 
       // Music player
@@ -162,49 +146,6 @@
 
       bgMusic.volume = 0.3;
 
-      // QR & link tools
-      const nameInput = document.getElementById('name-input');
-      const makeLinkBtn = document.getElementById('make-link');
-      const copyLinkBtn = document.getElementById('copy-link');
-      const qrcodeWrap = document.getElementById('qrcode');
-      let qr = null;
-
-      function currentBase() {
-        return window.location.origin + window.location.pathname;
-      }
-
-      function makeLinkFor(name) {
-        const url = new URL(currentBase());
-        if (name) url.searchParams.set('to', name);
-        return url.toString();
-      }
-
-      makeLinkBtn.addEventListener('click', () => {
-        const name = nameInput.value.trim();
-        if (!name) {
-          alert('Por favor, ingresa tu nombre');
-          return;
-        }
-        const link = makeLinkFor(name);
-        qrcodeWrap.innerHTML = '';
-        qr = new QRCode(qrcodeWrap, { text: link, width: 150, height: 150 });
-      });
-
-      copyLinkBtn.addEventListener('click', async () => {
-        const name = nameInput.value.trim();
-        if (!name) {
-          alert('Por favor, ingresa tu nombre');
-          return;
-        }
-        const link = makeLinkFor(name);
-        try {
-          await navigator.clipboard.writeText(link);
-          copyLinkBtn.textContent = '✓ Copiado!';
-          setTimeout(() => (copyLinkBtn.textContent = 'Copiar Link'), 2000);
-        } catch (e) {
-          alert('No se pudo copiar. Link: ' + link);
-        }
-      });
     </script>
   </body>
 </html>
