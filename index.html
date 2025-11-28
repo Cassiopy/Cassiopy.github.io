@@ -155,7 +155,7 @@
 
       // Enter button clicked - hide cover and start music
       enterBtn.addEventListener('click', () => {
-        coverModal.style.display = 'none';
+        coverModal.classList.add('hidden');
         bgMusic.muted = false;
         bgMusic.play().then(() => {
           console.log('Audio playing');
