@@ -1,44 +1,171 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Navidad 2025 ✨</title>
-  <link rel="stylesheet" href="styles.css">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Christmas Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="invite-wrap">
+      <section class="card header-card">
+        <div class="logo">✨</div>
+        <h1 class="title">You're Invited</h1>
+        <p class="subtitle">An Elegant Christmas Evening</p>
+        <p class="greeting" id="greeting">Dear Guest,</p>
+      </section>
 
-  <!-- Tipografías -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+      <section class="card details-card">
+        <div class="cols">
+          <div class="col event">
+            <h2>Event Details</h2>
+            <p><strong>Date:</strong> December 24, 2025</p>
+            <p><strong>Time:</strong> 7:00 PM</p>
+            <p class="address"><strong>Address:</strong> <span id="address-text">Los Castaños 279, Potrero de los Funes</span></p>
+            <div class="map" id="map-wrap">
+              <!-- Replace the query below with your real address. No API key required for this simple embed. -->
+              <iframe id="map-iframe" src="https://maps.app.goo.gl/q4VoT4RYrX7cpwts6" loading="lazy"></iframe>
+            </div>
+          </div>
 
-</head>
-<body>
-  <div class="container fade-in">
+          <div class="col actions">
+            <h2>RSVP & Share</h2>
+            <p>Share a personalized invitation link by adding <code>?to=Name</code> to the URL.</p>
+            <div class="link-tools">
+              <input id="name-input" placeholder="Invitee name (for link / QR)" />
+              <button id="make-link">Make Link</button>
+              <button id="copy-link">Copy Link</button>
+            </div>
 
-    <h1 class="title">Navidad 2025 <span class="sparkle">✨</span></h1>
-    <h2 class="subtitle">Hola <span id="guestName">invitado</span>, estás invitad@</h2>
-    <p class="date">24 de Diciembre — 21:00 hs</p>
+            <h3>QR Code</h3>
+            <div id="qrcode" class="qrcode"></div>
+            <small class="muted">Scan to open the personalized invitation</small>
+          </div>
+        </div>
+      </section>
 
-    <section class="card">
-      <h3 class="section-title">📍 Ubicación</h3>
+      <section class="card upload-card">
+        <h2>Photos</h2>
+        <p>Upload photos from the party. They remain in your browser until you download or refresh.</p>
+        <div id="drop-area" class="drop-area">
+          <p>Drag & Drop images here, or <label for="fileElem" class="file-label">choose files</label></p>
+          <input type="file" id="fileElem" multiple accept="image/*" />
+        </div>
+        <div class="gallery" id="gallery"></div>
+        <div class="gallery-actions">
+          <button id="download-all">Download All as ZIP</button>
+          <button id="clear-gallery">Clear</button>
+        </div>
+      </section>
 
-      <div class="map-container">
-        <iframe src="TU_IFRAME_DE_MAPS_ACÁ" loading="lazy"></iframe>
-      </div>
-    </section>
+      <footer class="card footer-card">
+        <p class="small muted">Replace the placeholder address in the map iframe `src` if you want a different location.</p>
+      </footer>
+    </main>
 
-    <section class="card">
-      <h3 class="section-title">📸 Subí tus fotos acá</h3>
+    <!-- Libraries: JSZip for zipping, FileSaver to save, and QRCode for QR generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-      <a href="TU_LINK_DE_CARPETA" target="_blank" class="btn">Abrir carpeta</a>
+    <script>
+      // Personalization: read ?to=Name
+      function getParam(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+      }
 
-      <img src="qr.png" alt="QR para subir fotos" class="qr">
-    </section>
+      const toName = getParam('to');
+      const greeting = document.getElementById('greeting');
+      if (toName) {
+        greeting.textContent = `Dear ${decodeURIComponent(toName)},`;
+      }
 
-  </div>
+      // QR / link tools
+      const nameInput = document.getElementById('name-input');
+      const makeLinkBtn = document.getElementById('make-link');
+      const copyLinkBtn = document.getElementById('copy-link');
+      const qrcodeWrap = document.getElementById('qrcode');
+      let qr = null;
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const name = params.get("guest") || "invitado";
-    document.getElementById("guestName").innerText = name;
-  </script>
+      function currentBase() {
+        return window.location.origin + window.location.pathname;
+      }
 
-</body>
+      function makeLinkFor(name) {
+        const url = new URL(currentBase());
+        if (name) url.searchParams.set('to', name);
+        return url.toString();
+      }
+
+      makeLinkBtn.addEventListener('click', () => {
+        const name = nameInput.value.trim();
+        const link = makeLinkFor(name);
+        // generate qr
+        qrcodeWrap.innerHTML = '';
+        qr = new QRCode(qrcodeWrap, { text: link, width: 140, height: 140 });
+      });
+
+      copyLinkBtn.addEventListener('click', async () => {
+        const name = nameInput.value.trim();
+        const link = makeLinkFor(name);
+        try {
+          await navigator.clipboard.writeText(link);
+          copyLinkBtn.textContent = 'Copied!';
+          setTimeout(() => (copyLinkBtn.textContent = 'Copy Link'), 1500);
+        } catch (e) {
+          alert('Could not copy. Here is the link: ' + link);
+        }
+      });
+
+      // Upload / drag-drop / gallery
+      const dropArea = document.getElementById('drop-area');
+      const fileElem = document.getElementById('fileElem');
+      const gallery = document.getElementById('gallery');
+      const downloadAllBtn = document.getElementById('download-all');
+      const clearBtn = document.getElementById('clear-gallery');
+
+      let images = []; // {name, file, url}
+
+      function handleFiles(files) {
+        [...files].forEach(file => {
+          if (!file.type.startsWith('image/')) return;
+          const url = URL.createObjectURL(file);
+          images.push({ name: file.name, file, url });
+          const img = document.createElement('img');
+          img.src = url;
+          img.alt = file.name;
+          img.className = 'thumb';
+          gallery.appendChild(img);
+        });
+      }
+
+      dropArea.addEventListener('dragover', (e) => { e.preventDefault(); dropArea.classList.add('drag'); });
+      dropArea.addEventListener('dragleave', () => dropArea.classList.remove('drag'));
+      dropArea.addEventListener('drop', (e) => { e.preventDefault(); dropArea.classList.remove('drag'); handleFiles(e.dataTransfer.files); });
+      fileElem.addEventListener('change', (e) => handleFiles(e.target.files));
+
+      downloadAllBtn.addEventListener('click', async () => {
+        if (images.length === 0) { alert('No images to download.'); return; }
+        const zip = new JSZip();
+        const imgFolder = zip.folder('photos');
+        for (const itm of images) {
+          const arrayBuffer = await itm.file.arrayBuffer();
+          imgFolder.file(itm.name, arrayBuffer);
+        }
+        zip.generateAsync({ type: 'blob' }).then(content => {
+          saveAs(content, 'party-photos.zip');
+        });
+      });
+
+      clearBtn.addEventListener('click', () => {
+        images = [];
+        gallery.innerHTML = '';
+      });
+
+      // allow clicking file label
+      document.querySelector('.file-label').addEventListener('click', () => fileElem.click());
+    </script>
+  </body>
 </html>
