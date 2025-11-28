@@ -427,49 +427,50 @@ body {
   box-shadow: 0 8px 32px rgba(212, 175, 55, 0.08);
 }
 
-.activities-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: center;
-}
-
-.activities-text {
-  text-align: left;
-}
-
-.activities-text p {
+.activities-description {
   color: var(--text-muted);
   font-size: 1rem;
   line-height: 1.7;
-  margin-bottom: 1.5rem;
+  margin: 0 0 2rem 0;
+  text-align: center;
 }
 
-.activities-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.activities-gallery {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+}
+
+.activity-card {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-}
-
-.activities-list li {
-  color: var(--text);
-  font-size: 1.1rem;
-  font-weight: 500;
-  display: flex;
   align-items: center;
-  gap: 0.75rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-.activities-image {
+.activity-card:hover {
+  transform: translateY(-8px);
+  filter: brightness(1.1);
+}
+
+.activity-image {
   width: 100%;
-  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
   border-radius: 12px;
   border: 3px solid var(--gold);
   box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
-  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.activity-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--text);
+  margin: 0;
+  font-weight: 600;
 }
 
 /* Share section */
@@ -618,9 +619,9 @@ body {
     min-width: 100%;
   }
 
-  .activities-content {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+  .activities-gallery {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
   }
 }
 
@@ -653,7 +654,17 @@ body {
   .details-section,
   .map-section,
   .photos-section,
-  .share-section {
+  .share-section,
+  .activities-section {
     padding: 1rem;
+  }
+
+  .activities-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .activity-title {
+    font-size: 0.95rem;
   }
 }
