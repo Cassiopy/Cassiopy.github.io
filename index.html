@@ -2,27 +2,36 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Invitación Navidad 2025</title>
+  <title>Navidad 2025 ✨</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Tipografías -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
 </head>
 <body>
-  <div class="card">
-    <h1>Navidad 2025 ✨</h1>
-    <h2>Hola <span id="guestName"></span>, estás invitad@</h2>
+  <div class="container fade-in">
 
-    <p>24 de diciembre — 21:00 hs</p>
+    <h1 class="title">Navidad 2025 <span class="sparkle">✨</span></h1>
+    <h2 class="subtitle">Hola <span id="guestName">invitado</span>, estás invitad@</h2>
+    <p class="date">24 de Diciembre — 21:00 hs</p>
 
-    <div class="section">
-      <h3>📍 Ubicación</h3>
-      <iframe src="TU_MAPS_EMBED_AQUÍ"></iframe>
-    </div>
+    <section class="card">
+      <h3 class="section-title">📍 Ubicación</h3>
 
-    <div class="section">
-      <h3>📸 Subí las fotos acá</h3>
-      <a href="TU_LINK_A_ALBUM" class="gold-btn">Abrir carpeta</a>
-      <img src="qr.png" class="qr">
-    </div>
+      <div class="map-container">
+        <iframe src="TU_IFRAME_DE_MAPS_ACÁ" loading="lazy"></iframe>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3 class="section-title">📸 Subí tus fotos acá</h3>
+
+      <a href="TU_LINK_DE_CARPETA" target="_blank" class="btn">Abrir carpeta</a>
+
+      <img src="qr.png" alt="QR para subir fotos" class="qr">
+    </section>
+
   </div>
 
   <script>
@@ -30,5 +39,6 @@
     const name = params.get("guest") || "invitado";
     document.getElementById("guestName").innerText = name;
   </script>
+
 </body>
 </html>
