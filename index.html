@@ -22,7 +22,7 @@
 
     <!-- Music player -->
     <div class="music-player">
-      <audio id="bg-music" loop autoplay>
+      <audio id="bg-music" loop autoplay muted playsinline>
         <source src="Dua Lipa - Levitating Featuring DaBaby (Official Music Video) - Dua Lipa.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
       </audio>
@@ -131,9 +131,66 @@
       const musicBtn = document.getElementById('music-btn');
       const volumeSlider = document.getElementById('volume-slider');
 
+      // Set initial volume
+      bgMusic.volume = 0.3;
+
+      // Try autoplay immediately
+      const attemptAutoplay = () => {
+        bgMusic.muted = false;
+        const playPromise = bgMusic.play();
+        
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              console.log('Autoplay successful');
+              musicBtn.textContent = '⏸️';
+            })
+            .catch(err => {
+              console.log('Autoplay failed, attempting workaround...');
+              // Workaround: create a dummy audio to trigger autoplay permission
+              const dummyAudio = new Audio();
+              dummyAudio.src = bgMusic.src;
+              dummyAudio.muted = true;
+              dummyAudio.play().then(() => {
+                // Now try again with real audio
+                bgMusic.play().then(() => {
+                  musicBtn.textContent = '⏸️';
+                }).catch(e => {
+                  console.log('Second attempt failed:', e);
+                  // Final fallback: wait for user interaction
+                  setupInteractionPlay();
+                });
+              }).catch(e => {
+                console.log('Dummy audio failed:', e);
+                setupInteractionPlay();
+              });
+            });
+        }
+      };
+
+      const setupInteractionPlay = () => {
+        const playOnInteract = () => {
+          bgMusic.muted = false;
+          bgMusic.play().then(() => {
+            musicBtn.textContent = '⏸️';
+            document.removeEventListener('click', playOnInteract);
+            document.removeEventListener('touchstart', playOnInteract);
+          }).catch(e => console.log('Play error:', e));
+        };
+        document.addEventListener('click', playOnInteract, { once: true });
+        document.addEventListener('touchstart', playOnInteract, { once: true });
+      };
+
+      // Start autoplay attempt when page loads
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', attemptAutoplay);
+      } else {
+        attemptAutoplay();
+      }
+
       musicBtn.addEventListener('click', () => {
         if (bgMusic.paused) {
-          bgMusic.play().catch(err => console.log('Autoplay blocked:', err));
+          bgMusic.play().catch(err => console.log('Play error:', err));
           musicBtn.textContent = '⏸️';
         } else {
           bgMusic.pause();
@@ -145,15 +202,6 @@
         bgMusic.volume = volumeSlider.value / 100;
       });
 
-      // Autoplay setup
-      bgMusic.volume = 0.3;
-      bgMusic.play().catch(err => console.log('Autoplay error:', err));
-      
-      // Update button state on load
-      if (!bgMusic.paused) {
-        musicBtn.textContent = '⏸️';
-      }
-      
       // Update button state on play/pause
       bgMusic.addEventListener('play', () => {
         musicBtn.textContent = '⏸️';
