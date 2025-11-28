@@ -123,26 +123,12 @@
         <div class="carousel-container">
           <button class="carousel-btn carousel-btn-prev" id="carousel-prev">❮</button>
           
-          <div class="carousel-wrapper">
-            <div class="activity-card carousel-slide">
-              <img src="Pileta.jpg" alt="Pileta" class="activity-image">
-              <h3 class="activity-title">🏊 Pileta</h3>
+          <div class="carousel-item">
+            <div class="carousel-image-wrapper">
+              <img src="Pileta.jpg" alt="Pileta" class="carousel-image" id="carousel-image">
             </div>
-            <div class="activity-card carousel-slide">
-              <img src="Mesa.jpg" alt="Mesa" class="activity-image">
-              <h3 class="activity-title">🍽️ Comidas</h3>
-            </div>
-            <div class="activity-card carousel-slide">
-              <img src="Juegos.jpeg" alt="Juegos" class="activity-image">
-              <h3 class="activity-title">🎮 Videojuegos</h3>
-            </div>
-            <div class="activity-card carousel-slide">
-              <img src="Karaoke.jpeg" alt="Karaoke" class="activity-image">
-              <h3 class="activity-title">🎤 Karaoke</h3>
-            </div>
-            <div class="activity-card carousel-slide">
-              <img src="Potrero.jpeg" alt="Potrero" class="activity-image">
-              <h3 class="activity-title">🌿 Potrero</h3>
+            <div class="carousel-info">
+              <h3 class="carousel-title" id="carousel-title">🏊 Pileta</h3>
             </div>
           </div>
           
@@ -231,24 +217,34 @@
       // Carousel functionality
       const carouselPrev = document.getElementById('carousel-prev');
       const carouselNext = document.getElementById('carousel-next');
-      const slides = document.querySelectorAll('.carousel-slide');
+      const carouselImage = document.getElementById('carousel-image');
+      const carouselTitle = document.getElementById('carousel-title');
+      
+      const activities = [
+        { image: 'Pileta.jpg', title: '🏊 Pileta' },
+        { image: 'Mesa.jpg', title: '🍽️ Comidas' },
+        { image: 'Juegos.jpeg', title: '🎮 Videojuegos' },
+        { image: 'Karaoke.jpeg', title: '🎤 Karaoke' },
+        { image: 'Potrero.jpeg', title: '🌿 Potrero' }
+      ];
+      
       let currentSlide = 0;
 
-      function showSlide(index) {
-        const offset = -index * 100;
-        slides.forEach(slide => {
-          slide.style.transform = `translateX(${offset}%)`;
-        });
+      function updateCarousel() {
+        const activity = activities[currentSlide];
+        carouselImage.src = activity.image;
+        carouselImage.alt = activity.title;
+        carouselTitle.textContent = activity.title;
       }
 
       carouselPrev.addEventListener('click', () => {
-        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-        showSlide(currentSlide);
+        currentSlide = (currentSlide - 1 + activities.length) % activities.length;
+        updateCarousel();
       });
 
       carouselNext.addEventListener('click', () => {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
+        currentSlide = (currentSlide + 1) % activities.length;
+        updateCarousel();
       });
 
     </script>
