@@ -1,72 +1,131 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Christmas Invitation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Fiesta de Navidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="invite-wrap">
-      <section class="card header-card">
-        <div class="logo">✨</div>
-        <h1 class="title">You're Invited</h1>
-        <p class="subtitle">An Elegant Christmas Evening</p>
-        <p class="greeting" id="greeting">Dear Guest,</p>
+    <!-- Decorative stars background -->
+    <div class="stars-bg">
+      <div class="star star-1"></div>
+      <div class="star star-2"></div>
+      <div class="star star-3"></div>
+      <div class="star star-4"></div>
+      <div class="star star-5"></div>
+      <div class="star star-6"></div>
+      <div class="star star-7"></div>
+      <div class="star star-8"></div>
+    </div>
+
+    <!-- Music player -->
+    <div class="music-player">
+      <audio id="bg-music" loop>
+        <source src="Dua Lipa - Levitating Featuring DaBaby (Official Music Video) - Dua Lipa.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+      </audio>
+      <button id="music-btn" class="music-btn" title="Reproducir música">🎵</button>
+      <input id="volume-slider" class="volume-slider" type="range" min="0" max="100" value="30">
+    </div>
+
+    <main class="invite-container">
+      <!-- Header with title -->
+      <section class="header-section">
+        <div class="decorative-top">
+          <span class="sparkle">✨</span>
+          <span class="sparkle">✨</span>
+          <span class="sparkle">✨</span>
+        </div>
+        
+        <h1 class="title-main">Fiesta de</h1>
+        <h1 class="title-main title-highlight">Navidad</h1>
+        
+        <p class="subtitle-text" id="greeting">Te invitamos a celebrar,</p>
+        
+        <div class="decorative-bottom">
+          <span class="sparkle">✨</span>
+          <span class="sparkle">✨</span>
+          <span class="sparkle">✨</span>
+        </div>
       </section>
 
-      <section class="card details-card">
-        <div class="cols">
-          <div class="col event">
-            <h2>Event Details</h2>
-            <p><strong>Date:</strong> December 24, 2025</p>
-            <p><strong>Time:</strong> 7:00 PM</p>
-            <p class="address"><strong>Address:</strong> <span id="address-text">Los Castaños 279, Potrero de los Funes</span></p>
-            <div class="map" id="map-wrap">
-              <!-- Replace the query below with your real address. No API key required for this simple embed. -->
-              <iframe id="map-iframe" src="https://maps.app.goo.gl/q4VoT4RYrX7cpwts6" loading="lazy"></iframe>
-            </div>
+      <!-- Event details section -->
+      <section class="details-section">
+        <div class="detail-item">
+          <span class="detail-icon">📅</span>
+          <div>
+            <p class="detail-label">Fecha</p>
+            <p class="detail-value">24 de Diciembre</p>
           </div>
+        </div>
 
-          <div class="col actions">
-            <h2>RSVP & Share</h2>
-            <p>Share a personalized invitation link by adding <code>?to=Name</code> to the URL.</p>
-            <div class="link-tools">
-              <input id="name-input" placeholder="Invitee name (for link / QR)" />
-              <button id="make-link">Make Link</button>
-              <button id="copy-link">Copy Link</button>
-            </div>
+        <div class="detail-item">
+          <span class="detail-icon">🕖</span>
+          <div>
+            <p class="detail-label">Hora</p>
+            <p class="detail-value">18:00 hs</p>
+          </div>
+        </div>
 
-            <h3>QR Code</h3>
-            <div id="qrcode" class="qrcode"></div>
-            <small class="muted">Scan to open the personalized invitation</small>
+        <div class="detail-item">
+          <span class="detail-icon">📍</span>
+          <div>
+            <p class="detail-label">Lugar</p>
+            <p class="detail-value">Los Castaños 279, Potrero de los Funes</p>
           </div>
         </div>
       </section>
 
-      <section class="card upload-card">
-        <h2>Photos</h2>
-        <p>Upload photos from the party. They remain in your browser until you download or refresh.</p>
-        <div id="drop-area" class="drop-area">
-          <p>Drag & Drop images here, or <label for="fileElem" class="file-label">choose files</label></p>
-          <input type="file" id="fileElem" multiple accept="image/*" />
-        </div>
-        <div class="gallery" id="gallery"></div>
-        <div class="gallery-actions">
-          <button id="download-all">Download All as ZIP</button>
-          <button id="clear-gallery">Clear</button>
+      <!-- Map section -->
+      <section class="map-section">
+        <h2 class="section-title">¿Cómo llegar?</h2>
+        <div class="map-container">
+          <a href="https://maps.app.goo.gl/q4VoT4RYrX7cpwts6" target="_blank" class="map-link">
+            📍 Abrir en Google Maps
+          </a>
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3353.2587463620753!2d-65.51622!3d-31.75856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x940bc8f8c6c8c8c8%3A0x1234567890abcdef!2sLos%20Casta%C3%B1os%20279%2C%20Potrero%20de%20los%20Funes!5e0!3m2!1ses!2sar!4v1234567890123" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            class="map-iframe">
+          </iframe>
         </div>
       </section>
 
-      <footer class="card footer-card">
-        <p class="small muted">Replace the placeholder address in the map iframe `src` if you want a different location.</p>
+      <!-- Photos section -->
+      <section class="photos-section">
+        <h2 class="section-title">📸 Compartir Fotos</h2>
+        <p class="section-description">Guarda las fotos de la fiesta en nuestra carpeta compartida:</p>
+        <a href="https://drive.google.com/drive/folders/10lwMtG7bVBI4earde9lrx412ZOsm0m42?usp=sharing" target="_blank" class="cta-button">
+          📁 Abrir Google Drive
+        </a>
+      </section>
+
+      <!-- QR & Share section -->
+      <section class="share-section">
+        <h2 class="section-title">Comparte la Invitación</h2>
+        <p class="section-description">Personaliza el link con tu nombre:</p>
+        
+        <div class="share-tools">
+          <input id="name-input" type="text" class="name-input" placeholder="Tu nombre" />
+          <button id="make-link" class="action-btn">Generar Link</button>
+          <button id="copy-link" class="action-btn">Copiar Link</button>
+        </div>
+
+        <div id="qrcode" class="qrcode-container"></div>
+        <small class="qr-hint">Escanea para ver tu invitación personalizada</small>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer-section">
+        <p class="footer-text">¡Te esperamos para un año más!</p>
+        <p class="footer-subtitle">Una noche llena de magia y alegría 🎄</p>
       </footer>
     </main>
 
-    <!-- Libraries: JSZip for zipping, FileSaver to save, and QRCode for QR generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <script>
@@ -79,10 +138,31 @@
       const toName = getParam('to');
       const greeting = document.getElementById('greeting');
       if (toName) {
-        greeting.textContent = `Dear ${decodeURIComponent(toName)},`;
+        greeting.textContent = `Querido/a ${decodeURIComponent(toName)}, te invitamos a celebrar,`;
       }
 
-      // QR / link tools
+      // Music player
+      const bgMusic = document.getElementById('bg-music');
+      const musicBtn = document.getElementById('music-btn');
+      const volumeSlider = document.getElementById('volume-slider');
+
+      musicBtn.addEventListener('click', () => {
+        if (bgMusic.paused) {
+          bgMusic.play().catch(err => console.log('Autoplay blocked:', err));
+          musicBtn.textContent = '⏸️';
+        } else {
+          bgMusic.pause();
+          musicBtn.textContent = '🎵';
+        }
+      });
+
+      volumeSlider.addEventListener('input', () => {
+        bgMusic.volume = volumeSlider.value / 100;
+      });
+
+      bgMusic.volume = 0.3;
+
+      // QR & link tools
       const nameInput = document.getElementById('name-input');
       const makeLinkBtn = document.getElementById('make-link');
       const copyLinkBtn = document.getElementById('copy-link');
@@ -101,71 +181,30 @@
 
       makeLinkBtn.addEventListener('click', () => {
         const name = nameInput.value.trim();
+        if (!name) {
+          alert('Por favor, ingresa tu nombre');
+          return;
+        }
         const link = makeLinkFor(name);
-        // generate qr
         qrcodeWrap.innerHTML = '';
-        qr = new QRCode(qrcodeWrap, { text: link, width: 140, height: 140 });
+        qr = new QRCode(qrcodeWrap, { text: link, width: 150, height: 150 });
       });
 
       copyLinkBtn.addEventListener('click', async () => {
         const name = nameInput.value.trim();
+        if (!name) {
+          alert('Por favor, ingresa tu nombre');
+          return;
+        }
         const link = makeLinkFor(name);
         try {
           await navigator.clipboard.writeText(link);
-          copyLinkBtn.textContent = 'Copied!';
-          setTimeout(() => (copyLinkBtn.textContent = 'Copy Link'), 1500);
+          copyLinkBtn.textContent = '✓ Copiado!';
+          setTimeout(() => (copyLinkBtn.textContent = 'Copiar Link'), 2000);
         } catch (e) {
-          alert('Could not copy. Here is the link: ' + link);
+          alert('No se pudo copiar. Link: ' + link);
         }
       });
-
-      // Upload / drag-drop / gallery
-      const dropArea = document.getElementById('drop-area');
-      const fileElem = document.getElementById('fileElem');
-      const gallery = document.getElementById('gallery');
-      const downloadAllBtn = document.getElementById('download-all');
-      const clearBtn = document.getElementById('clear-gallery');
-
-      let images = []; // {name, file, url}
-
-      function handleFiles(files) {
-        [...files].forEach(file => {
-          if (!file.type.startsWith('image/')) return;
-          const url = URL.createObjectURL(file);
-          images.push({ name: file.name, file, url });
-          const img = document.createElement('img');
-          img.src = url;
-          img.alt = file.name;
-          img.className = 'thumb';
-          gallery.appendChild(img);
-        });
-      }
-
-      dropArea.addEventListener('dragover', (e) => { e.preventDefault(); dropArea.classList.add('drag'); });
-      dropArea.addEventListener('dragleave', () => dropArea.classList.remove('drag'));
-      dropArea.addEventListener('drop', (e) => { e.preventDefault(); dropArea.classList.remove('drag'); handleFiles(e.dataTransfer.files); });
-      fileElem.addEventListener('change', (e) => handleFiles(e.target.files));
-
-      downloadAllBtn.addEventListener('click', async () => {
-        if (images.length === 0) { alert('No images to download.'); return; }
-        const zip = new JSZip();
-        const imgFolder = zip.folder('photos');
-        for (const itm of images) {
-          const arrayBuffer = await itm.file.arrayBuffer();
-          imgFolder.file(itm.name, arrayBuffer);
-        }
-        zip.generateAsync({ type: 'blob' }).then(content => {
-          saveAs(content, 'party-photos.zip');
-        });
-      });
-
-      clearBtn.addEventListener('click', () => {
-        images = [];
-        gallery.innerHTML = '';
-      });
-
-      // allow clicking file label
-      document.querySelector('.file-label').addEventListener('click', () => fileElem.click());
     </script>
   </body>
 </html>
