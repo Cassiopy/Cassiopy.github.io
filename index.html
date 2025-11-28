@@ -8,6 +8,16 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- Cover/Splash screen modal -->
+    <div id="cover-modal" class="cover-modal">
+      <div class="cover-content">
+        <h1 class="cover-title">Fiesta de</h1>
+        <h1 class="cover-title cover-highlight">Navidad</h1>
+        <p class="cover-subtitle" id="cover-greeting">[nombres] te invitamos a celebrar</p>
+        <button id="enter-btn" class="enter-btn">Entrar</button>
+      </div>
+    </div>
+
     <!-- Decorative stars background -->
     <div class="stars-bg">
       <div class="star star-1"></div>
@@ -120,55 +130,40 @@
         return url.searchParams.get(name);
       }
 
-      const toName = getParam('to');
-      const greeting = document.getElementById('greeting');
-      if (toName) {
-        greeting.textContent = `${decodeURIComponent(toName)}, te invitamos a celebrar`;
-      }
+      // Get name from URL
+      const toName = getParam('to') || 'todos';
+      const decodedName = decodeURIComponent(toName);
+      
+      // Detect plural: if there are spaces in the name, it means multiple names
+      const isPlural = decodedName.includes(' ') || decodedName === 'todos';
+      const verb = isPlural ? 'los invitamos' : 'te invitamos';
+      const greetingText = `${decodedName}, ${verb} a celebrar`;
+      
+      // Set greeting in both cover and main page
+      document.getElementById('cover-greeting').textContent = greetingText;
+      document.getElementById('greeting').textContent = greetingText;
 
       // Music player
       const bgMusic = document.getElementById('bg-music');
       const musicBtn = document.getElementById('music-btn');
       const volumeSlider = document.getElementById('volume-slider');
+      const coverModal = document.getElementById('cover-modal');
+      const enterBtn = document.getElementById('enter-btn');
 
       // Set initial volume
       bgMusic.volume = 0.3;
 
-      // Wait for user interaction to unmute and play with sound
-      let hasInteracted = false;
-      
-      const unmuteAndPlay = () => {
-        if (!hasInteracted) {
-          hasInteracted = true;
-          bgMusic.muted = false;
-          bgMusic.play().then(() => {
-            console.log('Audio unmuted and playing');
-            musicBtn.textContent = '⏸️';
-          }).catch(err => {
-            console.log('Play error:', err);
-          });
-          
-          // Remove listeners after first interaction
-          document.removeEventListener('click', unmuteAndPlay);
-          document.removeEventListener('touchstart', unmuteAndPlay);
-          document.removeEventListener('keydown', unmuteAndPlay);
-        }
-      };
-
-      // Listen for any user interaction to unmute
-      document.addEventListener('click', unmuteAndPlay);
-      document.addEventListener('touchstart', unmuteAndPlay);
-      document.addEventListener('keydown', unmuteAndPlay);
-
-      // Also try to unmute after 2 seconds (some browsers allow this)
-      setTimeout(() => {
-        if (!hasInteracted && bgMusic.paused) {
-          bgMusic.muted = false;
-          bgMusic.play().catch(err => {
-            console.log('Delayed play failed, waiting for interaction');
-          });
-        }
-      }, 2000);
+      // Enter button clicked - hide cover and start music
+      enterBtn.addEventListener('click', () => {
+        coverModal.style.display = 'none';
+        bgMusic.muted = false;
+        bgMusic.play().then(() => {
+          console.log('Audio playing');
+          musicBtn.textContent = '⏸️';
+        }).catch(err => {
+          console.log('Play error:', err);
+        });
+      });
 
       musicBtn.addEventListener('click', () => {
         if (bgMusic.paused) {
